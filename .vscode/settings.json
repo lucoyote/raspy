@@ -1,0 +1,25 @@
+{
+  "python.pythonPath": "C:\\Python27\\python.exe",
+  "files.exclude": {
+    "__error": "Not found",
+    "Ephem.pyc": true,
+    "SerialGate.pyc": true,
+    "config.pyc": true,
+    "daemon.pyc": true,
+    "gate2.pyc": true,
+    "System.pyc": true,
+    "neoPixelBus.pyc": true,
+    "Logger.pyc": true,
+    "HttpRele.pyc": true,
+    "iotmain.pyc": true,
+    "mqtt_httprele.pyc": true,
+    "mqtt_publisher.pyc": true,
+    "timer.pyc": true,
+    "SeriaRele.pyc": true,
+    "PowerLineDevice.pyc": true,
+    "mqtt_serial_gate.pyc": true,
+    "logger.log": true,
+    "__pycache__": true,
+    ".vscode": true
+  }
+}
