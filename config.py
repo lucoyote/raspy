@@ -2,6 +2,12 @@ import json
 from SerialGate import SerialGate
 from HttpRele import HttpRele
 
+place_Config = {'Name': 'San Michele dei Mucchietti',
+                'Address': 'Viale Rivi 32 Sassuolo',
+                'Latitude': 44.50527, 
+                'Longitude': 10.75054, 
+                'Altitude': 189.241638184}
+
 mqtt_Config = {'IP': '127.0.0.1',
                'Port': 1883,
                'UserName': 'lucoyote',
@@ -24,7 +30,8 @@ DeviceConfig = [{'Name': 'Cancello', 'Type': SerialGate,'SerialPort': '/dev/seri
                 {'Name': 'LuciEsterne','Type': HttpRele,'CommandURL': 'http://192.168.1.212/light', 'StateURL': 'http://192.168.1.212'}]
 
 
-Config = {'MQTT': mqtt_Config,
+Config = {'Place': place_Config,
+          'MQTT': mqtt_Config,
           'mail': mail_config,
           'router': router_config,
           'devices': DeviceConfig}
