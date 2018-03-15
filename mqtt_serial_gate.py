@@ -29,7 +29,7 @@ class mqtt_serial_gate (mqtt_publisher, SerialGate) :
         self.AddHandler(self.mqtt_TON, self.OnMqtt_TON)
 
     def OnMqttCommand (self, mqttmessage):
-        if mqttmessage.payload == 1:
+        if mqttmessage.payload == '1':
             self.OpenDoor()
 
     

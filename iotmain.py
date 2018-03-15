@@ -5,23 +5,36 @@ from mqtt_httprele import mqtt_httprele
 from mqtt_serial_gate import mqtt_serial_gate
 
 
-Devices =[]
+Devices ={}
+
+def GateCommand(mqttmessage):
+    if mqttmessage.payload == '1':
+        if Home.isNightNow():
+            Devices['LuciEsterne'].OnOff = 1
+            Devices['LuciEsterne'].TON = 120
+            Devices['LuciEsterne'].OnTimerOff = 1
 
 def Init():
     for _device in Config['devices']:
         if _device['Type'] == mqtt_serial_gate:
-            Devices.append(mqtt_serial_gate(Config['MQTT'],_device))
+            Devices[_device['Name']] = mqtt_serial_gate(Config['MQTT'],_device)       
         elif _device['Type'] == mqtt_httprele:
-            Devices.append(mqtt_httprele(Config['MQTT'],_device))
-
-
+            Devices[_device['Name']] = mqtt_httprele(Config['MQTT'],_device)
+    
+    Devices['Cancello'].AddHandler(Devices['Cancello'].mqtt_command, GateCommand)        
+    Devices['LuciEsterne'].Enable(1)
+ 
 def Main():
     pass
 
 if __name__ == '__main__':
-    Init()
-    while(1):
-        Main()
+    try:
+        Init()
+        while(1):
+            Main()
+    except:
+        Devices['LuciEsterne'].Enable (0)
+    
 
     
     

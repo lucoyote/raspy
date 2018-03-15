@@ -29,9 +29,9 @@ class Logger(object):
     def error(self, msg):
         self.logger.error(msg)
 
+log = Logger()
 
 if __name__ == '__main__':
-    log = Logger()
     log.debug('debug')
     log.info('info')
     log.warning('warning')

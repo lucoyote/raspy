@@ -29,7 +29,9 @@ class mqtt_publisher():
         self.client.publish(sId, Value, retain=Retain)
 
     def AddHandler(self, sToken, fHandler):
-        self.Handlers[sToken] = fHandler
+        if sToken not in self.Handlers:
+            self.Handlers[sToken] = []
+        self.Handlers[sToken].append(fHandler)
 
     def on_connect(self, lclient, userdata, flags, rc):
         print ("MQTT Connected")
@@ -43,7 +45,8 @@ class mqtt_publisher():
                format(message.topic, message.payload))
         topic = message.topic
         if topic in self.Handlers:
-            self.Handlers[topic](message)
+            for _handler in self.Handlers[topic]:
+                _handler(message)
 
 
 

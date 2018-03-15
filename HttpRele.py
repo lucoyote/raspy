@@ -1,6 +1,7 @@
 import json
 import requests
 from timer import IntervalTimer
+from Logger import log
 
 class HttpRele():
     """
@@ -44,21 +45,25 @@ class HttpRele():
         """
         Polling functon, only internal use
         """
-        if (self.OnOff != self.__Requested_OnOff or
-            self.TimerOnOff != self.__Requested_TimerOnOff or
-            self.TON != self.__Requested_TON):
-                requests.post(self.CommandUrl,data={'OnOff': self.__Requested_TON,
-                                                    'TimerOnOff': self.__Requested_TimerOnOff,
-                                                    'TON': self.__Requested_TON})
-                self.OnOff = self.__Requested_OnOff
-                self.TimerOnOff = self.__Requested_TimerOnOff
-                self.TON = self.__Requested_TON                
-        else:        
-            _State = requests.get(self.StateUrl).json()
-            if _State['OnOff'] == 1:
-                self.State = 1
+        try:
+            if (self.OnOff != self.__Requested_OnOff or
+                self.TimerOnOff != self.__Requested_TimerOnOff or
+                self.TON != self.__Requested_TON):
+                    requests.post(self.CommandUrl,data={'OnOff': self.__Requested_TON,
+                                                        'TimerOnOff': self.__Requested_TimerOnOff,
+                                                        'TON': self.__Requested_TON})
+                    self.OnOff = self.__Requested_OnOff
+                    self.TimerOnOff = self.__Requested_TimerOnOff
+                    self.TON = self.__Requested_TON                
             else:
-                self.State = 0
+                _State = requests.get(self.StateUrl).json()
+                if _State['OnOff'] == 1:
+                    self.State = 1
+                else:
+                    self.State = 0
+        except Exception as e:
+            log.debug (e.args)
+            
         
     
 
