@@ -1,6 +1,6 @@
 import json
-from SerialGate import SerialGate
-from HttpRele import HttpRele
+from mqtt_httprele import mqtt_httprele
+from mqtt_serial_gate import mqtt_serial_gate
 
 place_Config = {'Name': 'San Michele dei Mucchietti',
                 'Address': 'Viale Rivi 32 Sassuolo',
@@ -8,7 +8,7 @@ place_Config = {'Name': 'San Michele dei Mucchietti',
                 'Longitude': 10.75054, 
                 'Altitude': 189.241638184}
 
-mqtt_Config = {'IP': '127.0.0.1',
+mqtt_Config = {'IP': 'www.montionline.eu',
                'Port': 1883,
                'UserName': 'lucoyote',
                'Password': '28091811',
@@ -21,19 +21,13 @@ mail_config = {'smtp': 'smtp.gmail.com',
                'Password': '28091811',
                'Destination': 'luca@montionline.eu'}
 
-router_config = {'Enabled': True,
-                 'IP': '192.168.1.1',
-                 'UserName': 'lucoyote',
-                 'Password': 'Giallo2Sara@'}
-        
-DeviceConfig = [{'Name': 'Cancello', 'Type': SerialGate,'SerialPort': '/dev/serial0', 'MasterId': '1', 'SlaveId': '2'},
-                {'Name': 'LuciEsterne','Type': HttpRele,'CommandURL': 'http://192.168.1.212/light', 'StateURL': 'http://192.168.1.212'}]
+DeviceConfig = [{'Name': 'Cancello', 'Type': mqtt_serial_gate,'SerialPort': 'COM3', 'MasterId': '1', 'SlaveId': '2'},
+                {'Name': 'LuciEsterne','Type': mqtt_httprele,'CommandUrl': 'http://192.168.1.212/light', 'StateUrl': 'http://192.168.1.212'}]
 
 
 Config = {'Place': place_Config,
           'MQTT': mqtt_Config,
           'mail': mail_config,
-          'router': router_config,
           'devices': DeviceConfig}
 
 def SaveConfig (sFile, Configuration):

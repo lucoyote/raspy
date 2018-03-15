@@ -13,7 +13,7 @@ class mqtt_httprele (mqtt_publisher, HttpRele) :
         
         HttpRele.__init__(self,
                           Name = HTTPReleConfig['Name'],
-                          StateUrl = HTTPReleConfig['StatUrl'],
+                          StateUrl = HTTPReleConfig['StateUrl'],
                           CommandUrl = HTTPReleConfig['CommandUrl'])
 
         mqtt_path = BrokerConfig['ClientId'] + "/" + HTTPReleConfig['Name']

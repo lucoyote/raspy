@@ -35,7 +35,7 @@ class mqtt_publisher():
         print ("MQTT Connected")
         for key in self.Handlers.keys():
             print ("Subscribe " + key)
-            lclient.subscribe(key)
+            self.client.subscribe(key)
             print ("Subscribed " + key)
 
     def on_message(self, client, userdata, message):
