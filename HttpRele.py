@@ -62,7 +62,7 @@ class HttpRele():
                 else:
                     self.State = 0
         except Exception as e:
-            log.debug (e.args)
+            log.debug (e.message)
             
         
     

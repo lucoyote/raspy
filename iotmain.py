@@ -3,16 +3,20 @@ from Ephem import Home
 
 from mqtt_httprele import mqtt_httprele
 from mqtt_serial_gate import mqtt_serial_gate
-
+from Logger import log
 
 Devices ={}
 
 def GateCommand(mqttmessage):
     if mqttmessage.payload == '1':
         if Home.isNightNow():
+            log.info('Gate Open: Turn on External Lights')
             Devices['LuciEsterne'].OnOff = 1
             Devices['LuciEsterne'].TON = 120
             Devices['LuciEsterne'].OnTimerOff = 1
+        else:
+            log.info('Gate Open: It\'s day now,you don\'t need lights')
+
 
 def Init():
     for _device in Config['devices']:

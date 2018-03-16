@@ -1,6 +1,7 @@
 from __future__ import print_function
+from Logger import log
 import paho.mqtt.client as mqtt
-
+from threading import Thread
 
 class mqtt_publisher():
 
@@ -15,17 +16,17 @@ class mqtt_publisher():
         self.Handlers = {}
 
     def Connect(self):
-        print ("MQTT Connect")
+        log.info("MQTT Connect")
         self.client.connect(self.BROKER, self.Port, 60)
         self.client.loop_start()
 
     def Disconnect(self):
-        print ("MQTT Disconnect")
+        log.info ("MQTT Disconnect")
         self.client.loop_stop(True)
         self.client.disconnect()
 
     def Publish(self, sId, Value, Retain=True):
-        print ("MQTT publish {}({})".format(sId, Value))
+        log.info ("MQTT publish {}({})".format(sId, Value))
         self.client.publish(sId, Value, retain=Retain)
 
     def AddHandler(self, sToken, fHandler):
@@ -34,19 +35,21 @@ class mqtt_publisher():
         self.Handlers[sToken].append(fHandler)
 
     def on_connect(self, lclient, userdata, flags, rc):
-        print ("MQTT Connected")
+        log.info ("MQTT Connected")
         for key in self.Handlers.keys():
-            print ("Subscribe " + key)
+            log.info ("Subscribe " + key)
             self.client.subscribe(key)
-            print ("Subscribed " + key)
+            log.info ("Subscribed " + key)
 
     def on_message(self, client, userdata, message):
-        print ("MQTT Message Received {} ({})".
-               format(message.topic, message.payload))
+        log.info ("MQTT Message Received {} ({})".
+                  format(message.topic, message.payload))
         topic = message.topic
         if topic in self.Handlers:
             for _handler in self.Handlers[topic]:
-                _handler(message)
+                worker = Thread(target=_handler, args=(message,))
+                worker.start()
+                
 
 
 

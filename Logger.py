@@ -29,7 +29,7 @@ class Logger(object):
     def error(self, msg):
         self.logger.error(msg)
 
-log = Logger()
+log = Logger(name='IOTMain', level=logging.DEBUG)
 
 if __name__ == '__main__':
     log.debug('debug')
